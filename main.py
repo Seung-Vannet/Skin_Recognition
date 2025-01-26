@@ -51,31 +51,4 @@ def predict_image(image):
     predicted_index = np.argmax(predictions)
     return class_names[predicted_index]
 
-# Streamlit UI
-st.title("Fruits & Vegetables Recognition System")
-st.sidebar.title("Navigation")
-app_mode = st.sidebar.selectbox("Select Page", ["Home", "About Project", "Prediction"])
 
-if app_mode == "Home":
-    st.header("Welcome to the Fruits & Vegetables Recognition System")
-    if os.path.exists(HOME_IMG_PATH):
-        st.image(HOME_IMG_PATH, use_column_width=True)
-    else:
-        st.error("Home image not found! Please check the file path.")
-
-elif app_mode == "About Project":
-    st.header("About the Project")
-    st.text("This project recognizes fruits and vegetables using a deep learning model.")
-
-elif app_mode == "Prediction":
-    st.header("Model Prediction")
-    uploaded_file = st.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
-    if uploaded_file:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
-        if st.button("Predict"):
-            try:
-                prediction = predict_image(image)
-                st.success(f"Model Prediction: {prediction}")
-            except Exception as e:
-                st.error(f"An error occurred during prediction: {e}")
